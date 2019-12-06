@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/test/hello','Test\TestController@hello');
+Route::get('/test/adduser','User\LoginController@adduser');
+Route::get('/test/redis1','Test\TestController@redis1');
+
