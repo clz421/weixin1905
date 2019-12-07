@@ -18,4 +18,5 @@ Route::get('/', function () {
 Route::get('/test/hello','Test\TestController@hello');
 Route::get('/test/adduser','User\LoginController@adduser');
 Route::get('/test/redis1','Test\TestController@redis1');
+Route::get('/test/baidu','Test\TestController@baidu');
 
