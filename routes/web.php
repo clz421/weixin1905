@@ -20,3 +20,7 @@ Route::get('/test/adduser','User\LoginController@adduser');
 Route::get('/test/redis1','Test\TestController@redis1');
 Route::get('/test/baidu','Test\TestController@baidu');
 
+//微信
+Route::get('/wx','WeiXin\WxController@wechat');
+
+
