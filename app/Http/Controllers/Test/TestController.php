@@ -9,7 +9,7 @@ use GuzzleHttp\Client;
 class TestController extends Controller
 {
 	public function hello(){
-	   echo "Hello World 11!";
+	   echo "Hello World!";
 	}
 
     public function redis1(){
