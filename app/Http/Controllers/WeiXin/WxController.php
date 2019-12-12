@@ -4,12 +4,11 @@ namespace App\Http\Controllers\WeiXin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Foundation\Bootstrap\HandleExceptions;
 class WxController extends Controller
 {
     public function wechat()
     {
-        dd(111);
         $token = '2259b56f5898cd6192c50d338723d9e4';       //开发提前设置好的 token
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
