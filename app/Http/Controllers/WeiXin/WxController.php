@@ -46,7 +46,7 @@ class WxController extends Controller
     public function receiv(){
         $log_file = "wx.log";
         $xml_str = file_get_contents("php://input");
-        $data = date('Y-m-d H:i:s') . $xml;
+        $data = date('Y-m-d H:i:s') . $xml_str;
         file_put_contents($log_file,$data,FILE_APPEND);//追加写
         //处理xml数据
         $xml_obj = simplexml_load_string($xml_str);
