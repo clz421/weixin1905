@@ -29,7 +29,8 @@ class WxController extends Controller
     //推送
     public function receiv(){
         $log_file = "wx.log";
-        $data = json_encode($_POST);
+        $xml = file_get_contents("php://input");
+        $data = date('Y-m-d H:i:s') . $xml;
         file_put_contents($log_file,$data,FILE_APPEND);//追加写
     }
 
