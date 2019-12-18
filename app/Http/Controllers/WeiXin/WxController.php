@@ -11,7 +11,7 @@ class WxController extends Controller
 
     public function __construct(){
         //获取 access_token
-        $this->access_token = $this->getAccessToken;
+        $this->access_token = $this->getAccessToken();
     }
 
     public function getAccessToken(){
