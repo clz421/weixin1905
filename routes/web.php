@@ -22,5 +22,7 @@ Route::get('/test/baidu','Test\TestController@baidu');
 
 //微信
 Route::get('/wx','WeiXin\WxController@wechat');
+Route::post('/wx','WeiXin\WxController@receiv');  //微信推送
+
 
 
