@@ -54,10 +54,10 @@ class WxController extends Controller
         $event = $xml_obj->Event;  //获取事件类型
         if($event=='subscribe'){
             $openid = $xml_obj->FromUserName;  //获取用户openID
-            //获取用户细腻
+            //获取用户信息
             $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token.'&openid='.$openid.'&lang=zh_CN';
             $user_info = file_get_contents($url);
-            file_get_contents('wx_user.log',$user_info,FILE_APPEND);
+            file_put_contents("wx_user.log",$user_info,FILE_APPEND);
         }
     }
 
