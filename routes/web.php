@@ -19,6 +19,8 @@ Route::get('/test/hello','Test\TestController@hello');
 Route::get('/test/adduser','User\LoginController@adduser');
 Route::get('/test/redis1','Test\TestController@redis1');
 Route::get('/test/baidu','Test\TestController@baidu');
+Route::get('/test/xml','Test\TestController@xmlTest');
+
 
 //微信
 Route::get('/wx','WeiXin\WxController@wechat');
