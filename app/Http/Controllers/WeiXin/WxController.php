@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bootstrap\HandleExceptions;
 use App\Model\WxUserModel;
+use Illuminate\Support\Facades\Redis;
+use GuzzleHttp\Client;
 class WxController extends Controller
 {
     protected $access_token;
@@ -51,10 +53,11 @@ class WxController extends Controller
         file_put_contents($log_file,$data,FILE_APPEND);//追加写
         //处理xml数据
         $xml_obj = simplexml_load_string($xml_str);
-
+        
         $event = $xml_obj->Event;  //获取事件类型
+        $openid = $xml_obj->FromUserName;  //获取用户openID
         if($event=='subscribe'){
-            $openid = $xml_obj->FromUserName;  //获取用户openID
+            
             //判断用户是否已存在
             $u = WxUserModel::where(['openid'=>$openid])->first();
             
@@ -121,10 +124,10 @@ class WxController extends Controller
         file_put_contents($log_file,$json_str,FILE_APPEND);
     }
     //获取素材
-    public function getMedia(){
-        $media_id = '';
-        $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->access_token.'&media_id='.$media_id;
+    // public function getMedia(){
+    //     $media_id = '';
+    //     $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->access_token.'&media_id='.$media_id;
 
-    }
+    // }
 
 }

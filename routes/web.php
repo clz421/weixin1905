@@ -25,6 +25,8 @@ Route::get('/test/xml','Test\TestController@xmlTest');
 //微信
 Route::get('/wx','WeiXin\WxController@wechat');
 Route::post('/wx','WeiXin\WxController@receiv');  //微信推送
+Route::get('/wx/media','WeiXin\WxController@getmedia');  //获取临时素材
+
 
 
 
