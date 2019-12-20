@@ -68,14 +68,10 @@ class WxController extends Controller
                 $xml = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$msg.']]></Content></xml>';
                 echo $xml;
             }else{
-               
-
                 //获取用户信息
                 $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token.'&openid='.$openid.'&lang=zh_CN';
                 $user_info = file_get_contents($url);
                 $u = json_decode($user_info,true);
-                
-
                 //用户入库信息
                 $user_data = [
                     'openid' => $openid,
