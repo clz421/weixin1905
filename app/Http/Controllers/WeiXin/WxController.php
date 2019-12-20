@@ -114,6 +114,8 @@ class WxController extends Controller
         $fromuser = $xml_obj->ToUserName;//开发者公众号的id
         $time = time();
 
+        $media_id = $xml_obj->MediaId;
+
         if($msg_type=='text'){
             $content = date('Y-m-d H:i:s') . $xml_obj->Content;//发送的消息
 
