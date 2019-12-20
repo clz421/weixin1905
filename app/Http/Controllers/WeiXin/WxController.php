@@ -90,13 +90,7 @@ class WxController extends Controller
                 
                 $msg = '谢谢关注';
                 //回复用户信息
-                $xml = '<xml>
-                <ToUserName><![CDATA['.$openid.']]></ToUserName>
-                <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
-                <CreateTime>'.time().'</CreateTime>
-                <MsgType><![CDATA[text]]></MsgType>
-                <Content><![CDATA['.$msg.']]></Content>
-                </xml>';
+                $xml = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$msg.']]></Content></xml>';
                 echo $xml;
             }
             
@@ -112,13 +106,7 @@ class WxController extends Controller
         if($msg_type=='text'){
             $content = date('Y-m-d H:i:s') . $xml_obj->Content;//发送的消息
 
-            $response_text = '<xml>
-            <ToUserName><![CDATA['.$touser.']]></ToUserName>
-            <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
-            <CreateTime>'.$time.'</CreateTime>
-            <MsgType><![CDATA[text]]></MsgType>
-            <Content><![CDATA['.$content.']]></Content>
-          </xml>';
+            $response_text = '<xml><ToUserName><![CDATA['.$touser.']]></ToUserName><FromUserName><![CDATA['.$fromuser.']]></FromUserName><CreateTime>'.$time.'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$content.']]></Content></xml>';
           echo $response_text;   //回复用户消息
         }
 
@@ -131,6 +119,12 @@ class WxController extends Controller
         $json_str = file_get_contents($url);
         $log_file = 'wx_user.log';
         file_put_contents($log_file,$json_str,FILE_APPEND);
+    }
+    //获取素材
+    public function getMedia(){
+        $media_id = '';
+        $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->access_token.'&media_id='.$media_id;
+
     }
 
 }
