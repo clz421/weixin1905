@@ -65,7 +65,13 @@ class WxController extends Controller
                 //欢迎回来
                 // echo "欢迎回来";die;
                 $msg = '欢迎回来';
-                $xml = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$msg.']]></Content></xml>';
+                $xml = '<xml>
+                <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
+                <CreateTime>'.time().'</CreateTime>
+                <MsgType><![CDATA[text]]></MsgType>
+                <Content><![CDATA['.$msg.']]></Content>
+                </xml>';
                 echo $xml;
             }else{
                 //获取用户信息
@@ -89,7 +95,13 @@ class WxController extends Controller
                 
                 $msg = '谢谢关注';
                 //回复用户信息
-                $xml = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$msg.']]></Content></xml>';
+                $xml = '<xml>
+                <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
+                <CreateTime>'.time().'</CreateTime>
+                <MsgType><![CDATA[text]]></MsgType>
+                <Content><![CDATA['.$msg.']]></Content>
+                </xml>';
                 echo $xml;
             }
             
@@ -99,13 +111,19 @@ class WxController extends Controller
         $msg_type = $xml_obj->MsgType;
 
         $touser = $xml_obj->FromUserName;//接受用户openid
-        $fromuser = $xml_obj->ToUserNamel;//开发者公众号的id
+        $fromuser = $xml_obj->ToUserName;//开发者公众号的id
         $time = time();
 
         if($msg_type=='text'){
             $content = date('Y-m-d H:i:s') . $xml_obj->Content;//发送的消息
 
-            $response_text = '<xml><ToUserName><![CDATA['.$touser.']]></ToUserName><FromUserName><![CDATA['.$fromuser.']]></FromUserName><CreateTime>'.$time.'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$content.']]></Content></xml>';
+            $response_text = '<xml>
+            <ToUserName><![CDATA['.$touser.']]></ToUserName>
+            <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
+            <CreateTime>'.$time.'</CreateTime>
+            <MsgType><![CDATA[text]]></MsgType>
+            <Content><![CDATA['.$content.']]></Content>
+            </xml>';
           echo $response_text;   //回复用户消息
         }
 
