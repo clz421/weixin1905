@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bootstrap\HandleExceptions;
 use App\Model\WxUserModel;
-use Illuminate\Support\Facades\Redis;
-use GuzzleHttp\Client;
+// use Illuminate\Support\Facades\Redis;
+// use GuzzleHttp\Client;
 class WxController extends Controller
 {
     protected $access_token;
@@ -56,53 +56,53 @@ class WxController extends Controller
         
         $event = $xml_obj->Event;  //获取事件类型
         $openid = $xml_obj->FromUserName;  //获取用户openID
-        // if($event=='subscribe'){
+        if($event=='subscribe'){
             
-        //     //判断用户是否已存在
-        //     $u = WxUserModel::where(['openid'=>$openid])->first();
+            //判断用户是否已存在
+            $u = WxUserModel::where(['openid'=>$openid])->first();
             
-        //     if($u){
-        //         //欢迎回来
-        //         // echo "欢迎回来";die;
-        //         $msg = '欢迎回来';
-        //         $xml = '<xml>
-        //         <ToUserName><![CDATA['.$openid.']]></ToUserName>
-        //         <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
-        //         <CreateTime>'.time().'</CreateTime>
-        //         <MsgType><![CDATA[text]]></MsgType>
-        //         <Content><![CDATA['.$msg.']]></Content>
-        //         </xml>';
-        //         echo $xml;
-        //     }else{
-        //         //获取用户信息
-        //         $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token.'&openid='.$openid.'&lang=zh_CN';
-        //         $user_info = file_get_contents($url);
-        //         $u = json_decode($user_info,true);
-        //         //用户入库信息
-        //         $user_data = [
-        //             'openid' => $openid,
-        //             'nickname' => $u['nickname'],
-        //             'sex' => $u['sex'],
-        //             'headimgurl' => $u['headimgurl'],
-        //             'subscribe_time' => $u['subscribe_time']
-        //         ];
+            if($u){
+                //欢迎回来
+                // echo "欢迎回来";die;
+                $msg = '欢迎回来';
+                $xml = '<xml>
+                <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
+                <CreateTime>'.time().'</CreateTime>
+                <MsgType><![CDATA[text]]></MsgType>
+                <Content><![CDATA['.$msg.']]></Content>
+                </xml>';
+                echo $xml;
+            }else{
+                //获取用户信息
+                $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token.'&openid='.$openid.'&lang=zh_CN';
+                $user_info = file_get_contents($url);
+                $u = json_decode($user_info,true);
+                //用户入库信息
+                $user_data = [
+                    'openid' => $openid,
+                    'nickname' => $u['nickname'],
+                    'sex' => $u['sex'],
+                    'headimgurl' => $u['headimgurl'],
+                    'subscribe_time' => $u['subscribe_time'],
+                ];
                 
-        //         //openid 入库
-        //         $uid =  WxUserModel::insertGetId($user_data);
+                //openid 入库
+                $uid =  WxUserModel::insertGetId($user_data);
                 
-        //         $msg = '谢谢关注';
-        //         //回复用户信息
-        //         $xml = '<xml>
-        //         <ToUserName><![CDATA['.$openid.']]></ToUserName>
-        //         <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
-        //         <CreateTime>'.time().'</CreateTime>
-        //         <MsgType><![CDATA[text]]></MsgType>
-        //         <Content><![CDATA['.$msg.']]></Content>
-        //         </xml>';
-        //         echo $xml;
-        //     }
+                $msg = '谢谢关注';
+                //回复用户信息
+                $xml = '<xml>
+                <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
+                <CreateTime>'.time().'</CreateTime>
+                <MsgType><![CDATA[text]]></MsgType>
+                <Content><![CDATA['.$msg.']]></Content>
+                </xml>';
+                echo $xml;
+            }
             
-        // }
+        }
 
         //判断消息类型
         $msg_type = $xml_obj->MsgType;
