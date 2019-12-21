@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bootstrap\HandleExceptions;
 use App\Model\WxUserModel;
-// use Illuminate\Support\Facades\Redis;
-// use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Redis;
+use GuzzleHttp\Client;
 class WxController extends Controller
 {
     protected $access_token;
@@ -142,5 +142,40 @@ class WxController extends Controller
     //     $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->access_token.'&media_id='.$media_id;
 
     // }
+
+
+
+    /**
+     * 创建自定义菜单
+     */
+    public function createMenu()
+    {
+        $url = 'http://1905clz.comcto.com/vote';
+        $redirect_uri = urlencode($url);        //授权后跳转页面
+        //创建自定义菜单的接口地址
+        $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->access_token;
+        $menu = [
+            'button'    => [
+                [
+                    'type'  => 'click',
+                    'name'  => '获取天气',
+                    'key'   => 'weather'
+                ],
+                [
+                    'type'  => 'view',
+                    'name'  => '投票',
+                    'url'   => 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx308935095357b150&redirect_uri='.$redirect_uri.'&response_type=code&scope=snsapi_userinfo&state=ABCD1905#wechat_redirect'
+                ],
+            ]
+        ];
+        $menu_json = json_encode($menu,JSON_UNESCAPED_UNICODE);
+        $client = new Client();
+        $response = $client->request('POST',$url,[
+            'body'  => $menu_json
+        ]);
+        echo '<pre>';print_r($menu);echo '</pre>';
+        echo $response->getBody();      //接收 微信接口的响应数据
+    }
+
 
 }
