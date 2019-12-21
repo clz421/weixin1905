@@ -203,8 +203,13 @@ class WxController extends Controller
        $client = new Client();
        $response = $client->request('GET',$url);
        //获取文件扩展名
-       $f = $response->getHeader('Content-disposition')[0];
-       $extension = substr(trim($f,'"'),strpos($f,'.'));
+       $content_type = $response->getHeader('Content-Type')[0];
+    //    $extension = substr(trim($f,'"'),strpos($f,'.'));
+        // echo $content_type;echo '</br>';
+        $pos = strpos($content_type,'/');
+        // echo '/的位置：'.$pos;
+       $extension = '.' . substr($content_type,$pos+1);
+        // echo 'extension:'.$extension;
        //获取文件内容
        $file_content = $response->getBody();
         // echo $url;
@@ -223,8 +228,8 @@ class WxController extends Controller
 
         file_put_contents($save_path,$file_content);
         //  file_put_contents('cat.jpg',$img);
-         echo '下载素材成功';echo '</br>';
-         echo "文件名：".$file_name;
+        //  echo '下载素材成功';echo '</br>';
+         echo "文件保存成功".$save_path;
 
     }
 
@@ -241,34 +246,34 @@ class WxController extends Controller
     /**
      * 创建自定义菜单
      */
-    public function createMenu()
-    {
-        $url = 'http://1905clz.comcto.com/vote';
-        $redirect_uri = urlencode($url);        //授权后跳转页面
-        //创建自定义菜单的接口地址
-        $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->access_token;
-        $menu = [
-            'button'    => [
-                [
-                    'type'  => 'click',
-                    'name'  => '获取天气',
-                    'key'   => 'weather'
-                ],
-                [
-                    'type'  => 'view',
-                    'name'  => '投票',
-                    'url'   => 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx308935095357b150&redirect_uri='.$redirect_uri.'&response_type=code&scope=snsapi_userinfo&state=ABCD1905#wechat_redirect'
-                ],
-            ]
-        ];
-        $menu_json = json_encode($menu,JSON_UNESCAPED_UNICODE);
-        $client = new Client();
-        $response = $client->request('POST',$url,[
-            'body'  => $menu_json
-        ]);
-        echo '<pre>';print_r($menu);echo '</pre>';
-        echo $response->getBody();      //接收 微信接口的响应数据
-    }
+    // public function createMenu()
+    // {
+    //     $url = 'http://1905clz.comcto.com/vote';
+    //     $redirect_uri = urlencode($url);        //授权后跳转页面
+    //     //创建自定义菜单的接口地址
+    //     $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->access_token;
+    //     $menu = [
+    //         'button'    => [
+    //             [
+    //                 'type'  => 'click',
+    //                 'name'  => '获取天气',
+    //                 'key'   => 'weather'
+    //             ],
+    //             [
+    //                 'type'  => 'view',
+    //                 'name'  => '投票',
+    //                 'url'   => 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx308935095357b150&redirect_uri='.$redirect_uri.'&response_type=code&scope=snsapi_userinfo&state=ABCD1905#wechat_redirect'
+    //             ],
+    //         ]
+    //     ];
+    //     $menu_json = json_encode($menu,JSON_UNESCAPED_UNICODE);
+    //     $client = new Client();
+    //     $response = $client->request('POST',$url,[
+    //         'body'  => $menu_json
+    //     ]);
+    //     echo '<pre>';print_r($menu);echo '</pre>';
+    //     echo $response->getBody();      //接收 微信接口的响应数据
+    // }
 
 
 }
