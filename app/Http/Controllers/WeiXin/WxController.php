@@ -86,9 +86,6 @@ class WxController extends Controller
                     'headimgurl' => $u['headimgurl'],
                     'subscribe_time' => $u['subscribe_time']
                 ];
-                // $log_content = date('Y-m-d H:i:s') . '>>>>>' .$user_info . '\n';
-                // file_put_contents('wx_user.log',$log_content,FILE_APPEND);
-                // $user_info_arr = json_decode($user_info,true);
                 
                 //openid 入库
                 $uid =  WxUserModel::insertGetId($user_data);
