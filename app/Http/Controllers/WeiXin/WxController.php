@@ -203,18 +203,19 @@ class WxController extends Controller
        $client = new Client();
        $response = $client->request('GET',$url);
        //获取文件扩展名
-       $content_type = $response->getHeader('Content-Type')[0];
-    //    $extension = substr(trim($f,'"'),strpos($f,'.'));
+       $f = $response->getHeader('Content-disposition')[0];
+        $extension = substr(trim($f,'"'),strpos($f,'.'));
+    //    $content_type = $response->getHeader('Content-Type')[0];
         // echo $content_type;echo '</br>';
-        $pos = strpos($content_type,'/');
+        // $pos = strpos($content_type,'/');
         // echo '/的位置：'.$pos;
-       $extension = '.' . substr($content_type,$pos+1);
+    //    $extension = '.' . substr($content_type,$pos+1);
         // echo 'extension:'.$extension;
        //获取文件内容
        $file_content = $response->getBody();
         // echo $url;
         //下载素材内容
-        $data = file_get_contents($url);
+        // $data = file_get_contents($url);
          // 保存文件
          $save_path = 'wx_media/';
          if($media_type=='image'){       //保存图片文件
@@ -229,7 +230,7 @@ class WxController extends Controller
         file_put_contents($save_path,$file_content);
         //  file_put_contents('cat.jpg',$img);
         //  echo '下载素材成功';echo '</br>';
-         echo "文件保存成功".$save_path;
+        //  echo "文件保存成功".$save_path;
 
     }
 
